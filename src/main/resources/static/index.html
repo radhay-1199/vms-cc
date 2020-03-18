@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Welcome</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+<link rel="icon" type="image/png"
+	href="./resources/images/icons/favicon.ico" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="./resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="./resources/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="./resources/css/util.css">
+<link rel="stylesheet" type="text/css" href="./resources/css/main.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="bg-contact100"
+		style="background-image: url('./resources/images/bg-01.jpg');">
+		<div class="container-contact100">
+			<div class="wrap-contact100">
+				<div class="contact100-pic js-tilt" data-tilt>
+					<img src="./resources/images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="contact100-form validate-form">
+					<span class="contact100-form-title"> Welcome </span>
+					<div class="wrap-input100 validate-input">
+						<input class="input100" type="tel" name="mobile"
+							placeholder="Enter Mobile Number" id="number"
+							onkeypress="return onlyNumberKey(event)" maxlength=10 required>
+						<span class="focus-input100"></span> <span class="symbol-input100">
+							<i class="fa fa-mobile" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="container-contact100-form-btn">
+						<button type="submit" class="contact100-form-btn" id="sub">Subscribe</button>
+					</div>
+					<div class="container-contact100-form-btn">
+						<button type="submit" class="contact100-form-btn" id="unsub">Unsubscribe</button>
+					</div>
+					<div class="container-contact100-form-btn">
+						<button type="submit" class="contact100-form-btn" id="viewdetails">View
+							Profile</button>
+					</div>
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="My Modal" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close" style="text-align: right; padding: 0 5px;">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<div class="modal-header center">
+									<h2>User Details</h2>
+								</div>
+								<div class="modal-body">
+									<table class="table table-bordered">
+
+<tr>
+  	<th>MSISDN</th> 
+  	<td id="pMsisdn"></td>
+</tr>
+<tr> 
+ 	<th>Pack Name</th> 
+ 	<td id="pPackName"></td>
+</tr>
+<tr> 
+ 	<th>Subscription Date</th> 
+  	<td id="pCreateTime"></td>
+</tr>
+<tr> 
+	<th>Renewal Date</th> 
+  	<td id="pRenewalTime"></td>
+</tr>
+</table>
+									<p id="pMsisdn"></p>
+									<p id="pPackName"></p>
+									<p id="pCreateTime"></p>
+									<p id="pRenewalTime"></p>
+								</div>
+							</div>
+						</div>
+					</div>					
+					<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
+						aria-labelledby="My Modal" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close" style="text-align: right; padding: 0 5px;">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<div class="modal-header">
+          							<h2>Message</h2>
+        						</div>
+								<div class="modal-body">
+									<p id="submitMsg"></p>
+								</div>
+							</div>
+						</div>
+					</div>					
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!--===============================================================================================-->
+	<script src="./resources/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="./resources/vendor/bootstrap/js/popper.js"></script>
+	<script src="./resources/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="./resources/vendor/select2/select2.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="./resources/vendor/tilt/tilt.jquery.min.js"></script>
+	<script>
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+
+	<script> 
+    function onlyNumberKey(evt) { 
+          
+        // Only ASCII charactar in that range allowed 
+        var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
+            return false; 
+        return true; 
+    } 
+</script>
+
+	<script>
+$(document).ready(function(){
+	$("form").submit(function(){
+	    return false;
+	  });
+  $("#sub").click(function(){
+    $.getJSON("./checkdetails?msisdn="+document.getElementById("number").value+"&action=sub&pack=1&lang=1", function(result){
+		$("#submitMsg").text(result.ResponseMessage);
+    	$("#submitModal").modal('show');
+    });
+  });
+  
+$("#unsub").click(function(){
+	  	confirm("Are you sure you want to Unsubscribe"); 
+	    $.getJSON("./checkdetails?msisdn="+document.getElementById("number").value+"&action=unsub&pack=1&lang=1", function(result){
+			$("#submitMsg").text(result.ResponseMessage);
+	    	$("#submitModal").modal('show');
+	    });
+	  });
+$("#viewdetails").click(function(){
+	if($("#number").val()!=""){
+    	$.getJSON("./getdetails?msisdn="+document.getElementById("number").value, function(result){
+		if (result.msisdn!=null){
+    		$("#pMsisdn").text(result.msisdn);
+    		$("#pPackName").text(result.packName);
+    		$("#pCreateTime").text(result.createTime);
+    		$("#pRenewalTime").text(result.nextRenewalDate);
+    		$("#myModal").modal('show');
+    	}
+		else {
+		$("#submitMsg").text("User does not exist");
+    	$("#submitModal").modal('show');
+    	}
+    });
+	}
+  });
+});
+
+</script>
+
+	<!--===============================================================================================-->
+	<script src="./resources/js/main.js"></script>
+</body>
+</html>
